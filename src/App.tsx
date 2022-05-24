@@ -5,6 +5,7 @@ import './style/App.scss'
 import { Tabs, Flex, Field, Toast, Image } from 'react-vant'
 import { Search } from '@react-vant/icons';
 import HotList from './pages/hot'
+import OriginalList from './pages/original'
 
 function App () {
   const [tabList, setTabList] = useState([{
@@ -25,6 +26,21 @@ function App () {
     path: ''
   }])
   const [vauge, setVauge] = useState('');
+
+  const renderList = (row: any) => {
+    switch (row.id) {
+      case 1:
+        return <div></div>
+      case 2:
+        return <div></div>
+      case 3:
+        return <OriginalList />
+      case 4:
+        return <HotList></HotList>
+      default:
+        return <h4>暂无数据</h4>
+    }
+  }
 
   return (
     <div className="App">
@@ -55,7 +71,7 @@ function App () {
         <Tabs className='tabs' sticky swipeable>
           {tabList.map((item, i) => (
             <Tabs.TabPane key={item.id} title={`${item.title}`}>
-              {item.id === 4 ? <HotList></HotList> : <h4>暂无数据</h4>}
+              {renderList(item)}
             </Tabs.TabPane>
           ))}
         </Tabs>

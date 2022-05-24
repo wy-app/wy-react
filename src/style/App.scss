@@ -37,6 +37,9 @@
     .rv-sticky {
       border-bottom: 1px solid #eee;
     }
+    .rv-swiper {
+      overflow: auto;
+    }
     .rv-swiper__slide {
       min-height: 100vh;
       padding: 1px 0 20px;
