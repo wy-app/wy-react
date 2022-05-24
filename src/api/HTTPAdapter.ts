@@ -1,81 +1,95 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { Toast } from 'react-vant'
+import { Toast } from 'react-vant';
 
-let myRequester: number | null = null
-let myResponser: number | null = null
-
+const base = ''
+const axiosIns = axios.create()
+// 带cookie请求
+axios.defaults.withCredentials = true
+axios.defaults.timeout = 60 * 1000
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8'
 
-const initInterceptors = () => {
-  // 确保重新初始化拦截器之前，生成全新的promise对象
-  const source = axios.CancelToken.source()
-  // 重新初始化拦截器之前，先移除旧的拦截器
-  if (myRequester !== null && myResponser !== null) {
-    axios.interceptors.request.eject(myRequester)
-    axios.interceptors.response.eject(myResponser)
-  }
-
-  // 前置拦截器（发起请求之前的拦截）
-  myRequester = axios.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
-      (config as any).source = source
-      // if (config.url && config.url.indexOf('/login') < 0 && sessionStorage.getItem('sid')) {
-      //   config.headers.SID = sessionStorage.getItem('sid')
-      // }
-      return config
-    },
-    (error) => {
-      return Promise.reject(error)
-    }
-  )
-  const redirect = (res: any) => {
-    res.config.source.cancel(res.data.message)
-    // 退出到登录界面
-    initInterceptors()
-  }
-
-  // 后置拦截器（获取到响应时的拦截）
-  myResponser = axios.interceptors.response.use(
-    (response: AxiosResponse) => {
-      const { status, data: { code, message, type } } = response
-      if (code !== '000') {
-        if (code === '401' || code === '403') {
-          const messDom = document.getElementsByClassName('login-confirm')
-          // !messDom.length && Message.loginConfirm('长时间未操作，请退出重新登录').then(() => {
-          //   redirect(response)
-          // })
-        } else if (code === '400' || code === '410') {
-          return response.data
-        } else {
-          if (type === 'ALERT') {
-            Toast.fail(message)
-          } else {
-            console.log(message)
-          }
+// request 请求拦截器 - 请求之前headers加sid
+axios.interceptors.request.use(
+    (config: any) => {
+        //  每次发送请求之前检测都vuex存有token,那么都要放在请求头发送给服务器
+        const sid = sessionStorage.getItem('sid')
+        const locale = sessionStorage.getItem('locale')
+        if (config.url.indexOf('/login') < 0 && sid) {
+            config.headers.SID = sid
+            config.headers.LOCALE = locale || 'zh'
         }
-
-        return Promise.reject(response.data)
-      }
-
-      if (!response.config) { // 兼容：修改代码后保存  response结构发生了变化？？？？
-        return response
-      } else {
-        return response.data
-      }
+        if (config.url.indexOf('/login') > 0) {
+            config.headers.LOCALE = locale || 'zh'
+        }
+        return config
+    }, err => err
+)
+// response 错误统一处理
+axios.interceptors.response.use(
+    (res: AxiosResponse) => {
+        if (res.data.code === '401' || res.data.code === '403') {
+            console.log(res)
+        }
+        if (res.data.type == 'LOG') {
+            console.log(res.data.message)
+            return res
+        }
+        if (res.data.type == 'TIPS' || res.data.type == 'ALERT') {
+            Toast({ type: 'fail', message: res.data.message })
+            return res
+        }
+        return res
     },
-    (error: AxiosError) => {
-      if (error.response) {
-        const { status, data: { message } }: any = error.response
-        Toast.fail(`Code: ${status}, Message: ${message}`)
-        console.error('[Axios Error]', error.response)
-      } else {
-        Toast.fail(`${error}`)
-      }
-      return Promise.reject(error)
+    err => {
+        console.log('接口访问失败:')
+        if (err.code === 'ECONNABORTED') {
+            Toast({ type: 'fail', message: err.message })
+        }
+        return err
     }
-  )
+)
+
+/**
+ * get方法，对应get请求c
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
+export function get(url: string, params: object) {
+    return new Promise((resolve, reject) => {
+        axios.get(`${base}/${url}`, {
+            params
+        }).then(res => {
+            resolve(res.data)
+        }).catch(err => {
+            reject((err && err.data) || err)
+        })
+    })
 }
 
-initInterceptors()
+/**
+ * post方法，对应post请求
+ * @param {String} url [请求的url地址]
+ * @param {Object} params [请求时携带的参数]
+ */
 
-export default axios
+export function post(url: string, params: object) {
+    return new Promise((resolve, reject) => {
+        axios.post(`${base}/${url}`, params).then(res => {
+            if (url.indexOf('login') > -1) {
+                resolve(res)
+            } else {
+                resolve(res.data)
+            }
+        }).catch(err => {
+            reject((err && err.data) || err)
+        })
+    })
+}
+
+const ajax = {
+    post,
+    get,
+    axios,
+    axiosIns
+}
+export default ajax

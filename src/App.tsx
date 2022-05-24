@@ -6,7 +6,7 @@ import { Tabs, Flex, Field, Toast, Image } from 'react-vant'
 import { Search } from '@react-vant/icons';
 import HotList from './pages/hot'
 
-function App() {
+function App () {
   const [tabList, setTabList] = useState([{
     id: 1,
     title: '要闻',
@@ -51,8 +51,8 @@ function App() {
           </Flex.Item>
         </Flex>
       </header>
-      <div className='App-tabs'>
-        <Tabs sticky swipeable>
+      <div className='App-tabs-wrap'>
+        <Tabs className='tabs' sticky swipeable>
           {tabList.map((item, i) => (
             <Tabs.TabPane key={item.id} title={`${item.title}`}>
               {item.id === 4 ? <HotList></HotList> : <h4>暂无数据</h4>}

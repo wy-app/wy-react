@@ -29,22 +29,22 @@
     }
   }
 
-  .App-tabs {
+  .App-tabs-wrap {
     height: 48px;
     background-color: #282c34;
     font-size: calc(10px + 2vmin);
     color: #333;
-
+    .rv-sticky {
+      border-bottom: 1px solid #eee;
+    }
     .rv-swiper__slide {
       min-height: 100vh;
-      padding: 20px 0;
+      padding: 1px 0 20px;
       background: #eee;
     }
-
     .rv-tab--active {
       color: #ef4645;
     }
-
     .rv-tabs__line {
       background-color: #ef4645;
     }
