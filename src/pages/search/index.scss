@@ -1,9 +1,9 @@
 .search-list {
   min-height: 100vh;
-  .search-title {
-      text-align: left;
-  }
   .search-value {
-    flex: none
+    flex: auto
   }
+}
+.search-title {
+  text-align: left;
 }
