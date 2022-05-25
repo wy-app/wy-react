@@ -13,4 +13,6 @@ export interface newsItem {
   style: string
   tag?: string
   picInfo: [any]
+  imgsrc3gtype: number
+  tcount: number
 }

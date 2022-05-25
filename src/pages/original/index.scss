@@ -8,18 +8,25 @@
         text-align: left;
         font-size: var(--rv-font-size-lg);
     }
-    .data-tag {
-      margin-top: 5px;
-      text-align: left;
-        font-size: var(--rv-font-size-sm);
-        color: var(--rv-gray-6);
-    }
     .img-wrap {
       margin-top: 5px;
       display: flex;
       .rv-image {
         margin: 0 1px;
         flex: 1;
+      }
+    }
+    .detail {
+      margin-top: 5px;
+      text-align: left;
+      & > div {
+        display: inline-block;
+        margin-right: 8px;
+        font-size: var(--rv-font-size-sm);
+        color: var(--rv-gray-6);
+      }
+      .news-tag {
+        color: #ee1a1a;
       }
     }
 }
