@@ -1,0 +1,32 @@
+.data-list {
+  .data-row {
+    background-color: white;
+    border-top: 1px solid #f5f7f9;
+    padding: 0.2rem;
+  }
+    .data-title {
+        text-align: left;
+        font-size: var(--rv-font-size-lg);
+    }
+    .img-wrap {
+      margin-top: 5px;
+      display: flex;
+      .rv-image {
+        margin: 0 1px;
+        flex: 1;
+      }
+    }
+    .detail {
+      margin-top: 5px;
+      text-align: left;
+      & > div {
+        display: inline-block;
+        margin-right: 8px;
+        font-size: var(--rv-font-size-sm);
+        color: var(--rv-gray-6);
+      }
+      .news-tag {
+        color: #ee1a1a;
+      }
+    }
+}
