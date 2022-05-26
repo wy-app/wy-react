@@ -15,4 +15,5 @@ export interface newsItem {
   picInfo: [any]
   imgsrc3gtype: number
   tcount: number
+  imgurl?: [any]
 }

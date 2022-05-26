@@ -31,7 +31,7 @@ export default function HotList () {
 
   const renderRow = (row: newsItem, i: number) => {
     if (row.imgsrc) {
-      return <Cell titleClass="data-title" key={i} title={`${row.title}`}
+      return <Cell titleClass="data-title" key={row.title} title={`${row.title}`}
         label={`${row.tag || ''}  ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}
         icon={<Image width={120} height={80} src={row.imgsrc} />}
       />
