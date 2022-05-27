@@ -89,6 +89,10 @@
 .search-list {
   min-height: calc(100vh - 109px);
 
+  .search-cell {
+    height: 48px;
+  }
+
   .search-item {
     display: flex;
 
@@ -101,6 +105,31 @@
       white-space: normal;
       word-break: break-word;
       overflow: hidden;
+      font-size: 15px;
+
+      [class^="tag"] {
+        display: inline-block;
+        height: 17px;
+        line-height: 17px;
+        margin: 0 5px;
+        padding: 0 2.5px;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        border-radius: 3px;
+      }
+
+      .tag-Boil {
+        background: #ee1a1a;
+      }
+
+      .tag-Hot {
+        background: #fe5d10;
+      }
+
+      .tag-New {
+        background: #f5a623;
+      }
     }
 
     .No {
@@ -113,6 +142,7 @@
       font-family: Futura-Medium, sans-serif;
       text-align: center;
       color: #999;
+      font-size: 16px;
       background-size: 100%;
       background-repeat: no-repeat;
 

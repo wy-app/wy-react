@@ -83,10 +83,21 @@ function SearchPage () {
   // 渲染模糊匹配搜索列表
   const renderRow = (row: any, i: number) => {
     return (
-      <Cell valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
+      <Cell className='search-cell' valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
         <div className='search-item'>
           <span className={`No rank-${i + 1}`}>{(i === 0 || i === 1 || i === 2) ? '' : i + 1}</span>
-          <div className='title'>{row.hotWord}</div>
+          <div className='title'>
+            {row.hotWord}
+            {
+              row.tag === 'Boil'
+                ? <div className='tag-Boil'>沸</div>
+                : row.tag === 'Hot'
+                  ? <div className='tag-Hot'>热</div>
+                  : row.tag === 'New'
+                    ? <div className='tag-New'>新</div>
+                    : null
+            }
+          </div>
           <div className='exp'>{(row.exp / 10000).toFixed(1) + '万'}</div>
         </div>
       </Cell>
