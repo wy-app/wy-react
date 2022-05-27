@@ -1,9 +1,7 @@
 .search-page {
 
-  // .search {
-  // }
 
-  .search-logo {
+  .search-banner {
     position: relative;
     text-align: left;
     padding: 16px 14px;
@@ -58,11 +56,6 @@
       box-sizing: border-box;
     }
 
-    .data-title {
-      text-align: left;
-      font-size: var(--rv-font-size-lg);
-    }
-
     .content {
       height: 100%;
       // min-height: 80px;
@@ -100,7 +93,7 @@
     display: flex;
 
     .title {
-      flex-shrink: 2;
+      flex: 1;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
@@ -137,8 +130,7 @@
     }
 
     .exp {
-      flex: 1;
-      flex-shrink: 1;
+      flex-shrink: 0;
       text-align: right;
       font-size: 13px;
       color: #999;
@@ -147,17 +139,15 @@
     .search-value {
       flex: inherit
     }
+  }
+}
 
-    .search-title {
-      text-align: left;
+.search-filter {
+  svg {
+    opacity: 0.3;
+  }
 
-      svg {
-        opacity: 0.3;
-      }
-
-      em {
-        color: #ee1a1a;
-      }
-    }
+  em {
+    color: #ee1a1a;
   }
 }
