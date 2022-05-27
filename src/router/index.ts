@@ -25,7 +25,7 @@ const routes: IRoute[] = [{
   }
 }, {
   path: '/search',
-  name: 'Search',
+  name: 'SearchPage',
   component: React.lazy(() => import('../pages/search/index')),
   meta: {
     title: '搜索'
