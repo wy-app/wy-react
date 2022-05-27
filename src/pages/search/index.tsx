@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { memo, useRef, useState, useEffect } from 'react'
 import type { ListInstance } from 'react-vant';
 import { getHotWord, getSearch, getSearchDetail } from '@/api'
 import { Cell, List, Empty, Search, Image, Loading, Sticky } from 'react-vant'
@@ -7,7 +7,7 @@ import { /* BrowserRouter as Router, Switch, useParams, useLocation, */ useNavig
 import { Search as SearchIcon } from '@react-vant/icons'
 import { newsItem } from '../../types/news'
 
-export default function SearchPage () {
+function SearchPage () {
   const listRef = useRef<ListInstance>(null)
   const [entranceInfo, setEntranceInfo] = useState({} as any)
   const [dataList, setDataList] = useState([] as any)
@@ -82,44 +82,43 @@ export default function SearchPage () {
 
   // 渲染模糊匹配搜索列表
   const renderRow = (row: any, i: number) => {
-    return <>
-      <Cell titleClass="search-title" valueClass="search-value" key={row.hotWord} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
+    return (
+      <Cell valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
         <div className='search-item'>
           <span className={`No rank-${i + 1}`}>{(i === 0 || i === 1 || i === 2) ? '' : i + 1}</span>
           <div className='title'>{row.hotWord}</div>
           <div className='exp'>{(row.exp / 10000).toFixed(1) + '万'}</div>
         </div>
       </Cell>
-    </>
+    )
   }
   // 渲染精确匹配搜索列表
   const renderItem = (row: newsItem, i: number) => {
-    // row.title = row.title.replace(/\<em\>/g, '').replace(/\<\/em\>/g, '')
     if (row.imgurl && row.imgurl.length) {
-      return <Cell className='detail-row' titleClass="data-title" key={row.title} icon={<Image fit="cover" width={120} height={80} src={row.imgurl[0]} />} >
-        <div className='content'>
-          <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
-          <div className='tag' >{`${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
-        </div>
-      </Cell>
+      return (
+        <Cell className='detail-row' key={i} icon={<Image fit="cover" width={120} height={80} src={row.imgurl[0]} />} >
+          <div className='content'>
+            <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
+            <div className='tag' >{`${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
+          </div>
+        </Cell>
+      )
     } else {
-      return <Cell
-        className='detail-row'
-        titleClass="data-title"
-        key={row.title}
-      >
-        <div className='content'>
-          <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
-          <div className='tag' >{`${row.tag || ''} ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
-        </div>
-      </Cell >
+      return (
+        <Cell className='detail-row' key={i} >
+          <div className='content'>
+            <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
+            <div className='tag' >{`${row.tag || ''} ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
+          </div>
+        </Cell >
+      )
     }
   }
 
   return (
     <div className='search-page'>
       <Sticky>
-        <Search className='search' shape="round" background="#fff" value={vauge} onChange={onSearch} onClear={onClear} placeholder="请输入搜索关键词" showAction onCancel={onCancel} />
+        <Search className='search-head' shape="round" background="#fff" value={vauge} onChange={onSearch} onClear={onClear} placeholder="请输入搜索关键词" showAction onCancel={onCancel} />
       </Sticky>
       {
         isLoding ? <Loading type="ball" /> : null
@@ -127,7 +126,7 @@ export default function SearchPage () {
       {
         status === 'default'
           ? <>
-            <div className='search-logo'>
+            <div className='search-banner'>
               <Image className='logoPic' height="15" src={entranceInfo.logoPic}></Image>
               <Image className='sloganPic' height="20" src={entranceInfo.sloganPic}></Image>
               <div className='s-tip'>每30分钟更新</div>
@@ -141,25 +140,31 @@ export default function SearchPage () {
             </List>
           </>
           : status === 'keyword'
-            ? <> {
+            ? <div className='search-filter'> {
               searchList.length
                 ? searchList.map((e: any, i: number) => {
-                  return <Cell className='search-title' icon={<SearchIcon />} onClick={() => { searchDetail(e.suggestion) }}>
-                    <div dangerouslySetInnerHTML={{ __html: e.suggestion }}></div>
-                  </Cell>
+                  return (
+                    <Cell key={i} icon={<SearchIcon />} onClick={() => { searchDetail(e.suggestion) }}>
+                      <div dangerouslySetInnerHTML={{ __html: e.suggestion }}></div>
+                    </Cell>
+                  )
                 })
                 : <Empty description="暂无数据" />
-            }</>
+            }</div>
             : status === 'detail'
-              ? <div className='detail-wrap'>{
-                detailList.length
-                  ? detailList.map((e: any, i: number) => {
-                    return renderItem(e, i)
-                  })
-                  : <Empty description="暂无数据" />
-              }</div>
+              ? <div className='detail-wrap'>
+                {
+                  detailList.length
+                    ? detailList.map((e: any, i: number) => {
+                      return renderItem(e, i)
+                    })
+                    : <Empty description="暂无数据" />
+                }
+              </div>
               : <Empty description="暂无数据" />
       }
     </div>
   )
 }
+
+export default memo(SearchPage)
