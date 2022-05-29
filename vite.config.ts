@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [react(),
   {
     ...eslint({
-      include: 'src/**/**/*.+(js|jsx|ts|tsx|vue)'
+      include: 'src/**/**/*.+(js|jsx|ts|tsx)'
     }),
     enforce: 'pre'
   }],
