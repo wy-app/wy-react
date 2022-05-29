@@ -1,6 +1,6 @@
 import { memo, useRef, useState, useEffect } from 'react'
 import type { ListInstance } from 'react-vant';
-import { getHotWord, getSearch, getSearchDetail } from '@/api'
+import { getHotWord, getSearch, getSearchDetailList } from '@/api'
 import { Cell, List, Empty, Search, Image, Loading, Sticky } from 'react-vant'
 import './index.scss'
 import { /* BrowserRouter as Router, Switch, useParams, useLocation, */ useNavigate } from 'react-router-dom'
@@ -59,7 +59,7 @@ function SearchPage (props: any) {
     setVauge(word)
     setIsLoding(true)
     setDetailList([])
-    getSearchDetail({ callback: 'callback_fyz' }, { query: word, page: 0, size: 20, from: 'wap', needPcUrl: true })
+    getSearchDetailList({ callback: 'callback_fyz' }, { query: word, page: 0, size: 20, from: 'wap', needPcUrl: true })
       .then((res: any) => {
         if (!res) return
         const matchArr = res.match(/callback_fyz\((.*)\)/)
@@ -103,11 +103,18 @@ function SearchPage (props: any) {
       </Cell>
     )
   }
+
+  const toDetail = (docid: string) => {
+    navigate('/detail', {
+      state: { id: docid }
+    })
+  }
+
   // 渲染精确匹配搜索列表
   const renderItem = (row: newsItem, i: number) => {
     if (row.imgurl && row.imgurl.length) {
       return (
-        <Cell {...props} className='detail-row' key={i} icon={<Image fit="cover" width={120} height={80} src={row.imgurl[0]} />} >
+        <Cell {...props} className='detail-row' key={i} icon={<Image fit="cover" width={120} height={80} src={row.imgurl[0]} />} onClick={() => toDetail(row.docid)}>
           <div className='content'>
             <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
             <div className='tag' >{`${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
@@ -116,7 +123,7 @@ function SearchPage (props: any) {
       )
     } else {
       return (
-        <Cell  {...props} className='detail-row' key={i} >
+        <Cell {...props} className='detail-row' key={i} onClick={() => toDetail(row.docid)}>
           <div className='content'>
             <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
             <div className='tag' >{`${row.tag || ''} ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
