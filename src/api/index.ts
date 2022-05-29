@@ -8,6 +8,7 @@ const index_original = 'http://3g.163.com/touch/api/pagedata/index_original'
 const hotWord = 'http://gw.m.163.com/search/api/v1/pc-wap/hot-word'
 const searchApi = 'http://gw.m.163.com/search/api/v1/pc-wap/sug'
 const searchDetail = 'http://c.m.163.com/fe/api/search/query'
+const detailAPi = `http://c.m.163.com/nc/article/docid/full.html`
 
 export const getHostNews = (params: any) => {
   return get(`${base}?key=wy&url=${hotUrl}`, params)
@@ -29,10 +30,15 @@ export const getSearch = (params: any, obj: any) => {
   return get(`${base}?key=wy&url=${encodeURIComponent(`${searchApi}?${str}`)}`, params)
 }
 
-export const getSearchDetail = (params: any, obj: any) => {
+export const getSearchDetailList = (params: any, obj: any) => {
   let str = ''
   for (const key in obj) {
     str += `${key}=${obj[key]}&`
   }
   return get(`${base}?key=wy&url=${encodeURIComponent(`${searchDetail}?${str}`)}`, params)
+}
+
+export const getDetailData = (params: any, obj: any) => {
+  const url = detailAPi.replace('docid', obj.docid)
+  return get(`${base}?key=wy&url=${encodeURIComponent(`${url}`)}`, params)
 }

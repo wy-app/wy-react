@@ -32,7 +32,8 @@ const routes: IRoute[] = [{
   }
 }, {
   path: '/detail',
-  name: 'NewsDetail',
+  name: 'Detail',
+  component: React.lazy(() => import('../pages/search/Detail')),
   meta: {
     title: '新闻详情'
   }

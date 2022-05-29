@@ -1,13 +1,13 @@
 import { memo, useRef, useState, useEffect } from 'react'
 import type { ListInstance } from 'react-vant';
-import { getHotWord, getSearch, getSearchDetail } from '@/api'
+import { getHotWord, getSearch, getSearchDetailList } from '@/api'
 import { Cell, List, Empty, Search, Image, Loading, Sticky } from 'react-vant'
 import './index.scss'
 import { /* BrowserRouter as Router, Switch, useParams, useLocation, */ useNavigate } from 'react-router-dom'
 import { Search as SearchIcon } from '@react-vant/icons'
 import { newsItem } from '../../types/news'
 
-function SearchPage () {
+function SearchPage (props: any) {
   const listRef = useRef<ListInstance>(null)
   const [entranceInfo, setEntranceInfo] = useState({} as any)
   const [dataList, setDataList] = useState([] as any)
@@ -59,7 +59,7 @@ function SearchPage () {
     setVauge(word)
     setIsLoding(true)
     setDetailList([])
-    getSearchDetail({ callback: 'callback_fyz' }, { query: word, page: 0, size: 20, from: 'wap', needPcUrl: true })
+    getSearchDetailList({ callback: 'callback_fyz' }, { query: word, page: 0, size: 20, from: 'wap', needPcUrl: true })
       .then((res: any) => {
         if (!res) return
         const matchArr = res.match(/callback_fyz\((.*)\)/)
@@ -83,7 +83,7 @@ function SearchPage () {
   // 渲染模糊匹配搜索列表
   const renderRow = (row: any, i: number) => {
     return (
-      <Cell className='search-cell' valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
+      <Cell {...props} className='search-cell' valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
         <div className='search-item'>
           <span className={`No rank-${i + 1}`}>{(i === 0 || i === 1 || i === 2) ? '' : i + 1}</span>
           <div className='title'>
@@ -103,11 +103,18 @@ function SearchPage () {
       </Cell>
     )
   }
+
+  const toDetail = (docid: string) => {
+    navigate('/detail', {
+      state: { id: docid }
+    })
+  }
+
   // 渲染精确匹配搜索列表
   const renderItem = (row: newsItem, i: number) => {
     if (row.imgurl && row.imgurl.length) {
       return (
-        <Cell className='detail-row' key={i} icon={<Image fit="cover" width={120} height={80} src={row.imgurl[0]} />} >
+        <Cell {...props} className='detail-row' key={i} icon={<Image fit="cover" width={120} height={80} src={row.imgurl[0]} />} onClick={() => toDetail(row.docid)}>
           <div className='content'>
             <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
             <div className='tag' >{`${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
@@ -116,7 +123,7 @@ function SearchPage () {
       )
     } else {
       return (
-        <Cell className='detail-row' key={i} >
+        <Cell {...props} className='detail-row' key={i} onClick={() => toDetail(row.docid)}>
           <div className='content'>
             <div className='title' dangerouslySetInnerHTML={{ __html: row.title }}></div>
             <div className='tag' >{`${row.tag || ''} ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}</div>
@@ -128,7 +135,7 @@ function SearchPage () {
 
   return (
     <div className='search-page'>
-      <Sticky>
+      <Sticky {...props}>
         <Search className='search-head' shape="round" background="#fff" value={vauge} onChange={onSearch} onClear={onClear} placeholder="请输入搜索关键词" showAction onCancel={onCancel} />
       </Sticky>
       {
@@ -155,7 +162,7 @@ function SearchPage () {
               searchList.length
                 ? searchList.map((e: any, i: number) => {
                   return (
-                    <Cell key={i} icon={<SearchIcon />} onClick={() => { searchDetail(e.suggestion) }}>
+                    <Cell {...e} key={i} icon={<SearchIcon />} onClick={() => { searchDetail(e.suggestion) }}>
                       <div dangerouslySetInnerHTML={{ __html: e.suggestion }}></div>
                     </Cell>
                   )
