@@ -83,7 +83,7 @@ function SearchPage (props: any) {
   // 渲染模糊匹配搜索列表
   const renderRow = (row: any, i: number) => {
     return (
-      <Cell {...props} className='search-cell' valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.hotWord) }}>
+      <Cell {...props} className='search-cell' valueClass="search-value" key={i} value={`${row.exp}`} onClick={() => { searchDetail(row.searchWord) }}>
         <div className='search-item'>
           <span className={`No rank-${i + 1}`}>{(i === 0 || i === 1 || i === 2) ? '' : i + 1}</span>
           <div className='title'>

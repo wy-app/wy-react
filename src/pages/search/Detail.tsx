@@ -3,10 +3,6 @@ import { getDetailData } from '@/api'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 import './index.scss'
 import { Cell, List, Empty, Search, Image, Loading, Sticky } from 'react-vant'
-
-interface DetailProps {
-  id: string
-}
 interface DetailDataType {
   title: string
   docid: string
@@ -16,36 +12,40 @@ interface DetailDataType {
   ptime: string
   source: string
 }
-function Detail (props: any) {
-  const { state }: any = useLocation()
-  if (!state.id) return <Empty description="暂无数据" />
+function Detail () {
+  const localtion = useLocation()
+  const { id } = localtion.state as any
+  if (!id) return <Empty description="暂无数据" />
   const [detailData, setDetailData] = useState({} as DetailDataType)
 
   // 请求数据
   const onLoad = async () => {
-    const res: any = await getDetailData({ callback: 'callback_fyz' }, { docid: state.id })
+    const res: any = await getDetailData({ callback: 'callback_fyz' }, { docid: id })
     if (!res) return
     const matchArr = res.match(/callback_fyz\((.*)\)/)
     const resultStr = JSON.parse(matchArr[1])
     const data = JSON.parse(resultStr)
     console.log(data)
-    const detail = data[state.id]
+    const detail = data[id]
     detail.img && detail.img.forEach((e: any) => {
       const sizes = e.pixel.split('*')
       detail.body = detail.body.replace(e.ref, `<img src="${e.src}" width="100%" />`)
     })
     detail.video && detail.video.forEach((e: any) => {
-      detail.body = detail.body.replace(e.ref, `<video width="100%" controls autoplay>
+      detail.body = detail.body.replace(e.ref, `</p><video width="100%" controls autoplay>
       <source src="${e.url_mp4}" type="video/mp4">
-    </video>`).replace('0TGMV5C5', 'video-wrap')
+    </video>`)
     })
     console.log(detail)
     setDetailData(detail)
   }
 
   useEffect(() => {
-    onLoad()
-  }, [])
+    if (id) {
+      const timeout = setTimeout(() => onLoad());
+      return () => clearTimeout(timeout)
+    }
+  }, [id])
 
   return (
     <article >
