@@ -11,6 +11,10 @@ interface DetailDataType {
   title: string
   docid: string
   body: string
+  statement?: string
+  ipLocation: string
+  ptime: string
+  source: string
 }
 function Detail (props: any) {
   const { state }: any = useLocation()
@@ -26,9 +30,14 @@ function Detail (props: any) {
     const data = JSON.parse(resultStr)
     console.log(data)
     const detail = data[state.id]
-    detail.img.forEach((e: any) => {
+    detail.img && detail.img.forEach((e: any) => {
       const sizes = e.pixel.split('*')
       detail.body = detail.body.replace(e.ref, `<img src="${e.src}" width="100%" />`)
+    })
+    detail.video && detail.video.forEach((e: any) => {
+      detail.body = detail.body.replace(e.ref, `<video width="100%" controls autoplay>
+      <source src="${e.url_mp4}" type="video/mp4">
+    </video>`).replace('0TGMV5C5', 'video-wrap')
     })
     console.log(detail)
     setDetailData(detail)
@@ -41,8 +50,14 @@ function Detail (props: any) {
   return (
     <article >
       <div className='detail-content'>
-        <h3>{detailData.title}</h3>
+        <div className='title'>{detailData.title}</div>
+        <div className='head-info'>
+          <span>{detailData.ptime}</span>
+          <span>{detailData.ipLocation}</span>
+          <div>{detailData.source}</div>
+        </div>
         <div dangerouslySetInnerHTML={{ __html: detailData.body }}></div>
+        <p>{detailData.statement}</p>
       </div>
     </article>
   )
