@@ -4,6 +4,7 @@ import { getOriginalNews } from '@/api'
 import { Cell, List, Empty, Image, PullRefresh } from 'react-vant'
 import './index.scss'
 import { newsItem } from '../../types/news'
+import ListItem from '../../components/ListItem'
 
 export default function HotList () {
   const listRef = useRef<ListInstance>(null)
@@ -54,29 +55,7 @@ export default function HotList () {
         }
         {
           item.data.map((row: newsItem, i: number) => {
-            if (row.imgsrc3gtype >= 3) {
-              return (
-                <div className="data-row" key={i} >
-                  <div className='new-title'>{row.title}</div>
-                  <div className='img-wrap'>
-                    {
-                      row.picInfo.map((e: any) => <Image width="100" height="200" src={e.url} />)
-                    }
-                  </div>
-                  <div className='detail'>
-                    <div className='news-tag'>{row.tag || ''}</div>
-                    <div className='news-source'>{row.source || ''}</div>
-                    <div className='ptime'>{row.ptime ? row.ptime.slice(0, -3) : ''}</div>
-                    <div className='reply'>{row.tcount}跟贴</div>
-                  </div>
-                </div >
-              )
-            } else {
-              return <Cell className='data-row' titleClass="data-title" key={i} title={`${row.title}`}
-                label={`${row.tag || ''}  ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''} ${row.tcount}跟贴`}
-                icon={<Image width={120} height={80} src={row.picInfo[0].url} />}
-              />
-            }
+            return <ListItem data={row} key={i}></ListItem>
           })
         }
       </>

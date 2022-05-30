@@ -4,6 +4,7 @@ import { getHostNews } from '@/api'
 import { Cell, List, Empty, Image, PullRefresh } from 'react-vant'
 import './index.scss'
 import { newsItem } from '../../types/news'
+import ListItem from '../../components/ListItem'
 
 export default function HotList () {
   const listRef = useRef<ListInstance>(null)
@@ -30,19 +31,7 @@ export default function HotList () {
   }
 
   const renderRow = (row: newsItem, i: number) => {
-    if (row.imgsrc) {
-      return <Cell titleClass="data-title" key={row.title} title={`${row.title}`}
-        label={`${row.tag || ''}  ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}
-        icon={<Image width={120} height={80} src={row.imgsrc} />}
-      />
-    } else {
-      return <Cell
-        titleClass="data-title"
-        key={row.title}
-        title={`${row.title}`}
-        label={`${row.tag || ''}  ${row.source} \t ${row.ptime ? row.ptime.slice(0, -3) : ''}`}
-      />
-    }
+    return <ListItem data={row} key={i}></ListItem>
   }
 
   return (
