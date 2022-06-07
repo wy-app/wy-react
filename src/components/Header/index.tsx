@@ -18,7 +18,7 @@ function Header () {
           <Image className='logo-icon' src={logo} />
         </Flex.Item>
         < Flex.Item span={16} >
-          <Search className='search' shape="round" background="#ef4645" value={vauge} onFocus={onFocus} placeholder="请输入搜索关键词"
+          <Search className='search-wrap' shape="round" background="#ef4645" value={vauge} onFocus={onFocus} placeholder="请输入搜索关键词"
           />
         </Flex.Item>
         < Flex.Item span={4} >

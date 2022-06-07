@@ -6,6 +6,7 @@ import './index.scss'
 import { /* BrowserRouter as Router, Switch, useParams, useLocation, */ useNavigate } from 'react-router-dom'
 import { Search as SearchIcon } from '@react-vant/icons'
 import { newsItem } from '../../types/news'
+import ListItem from '../../components/ListItem'
 
 function SearchPage (props: any) {
   const listRef = useRef<ListInstance>(null)
@@ -106,7 +107,7 @@ function SearchPage (props: any) {
 
   const toDetail = (docid: string) => {
     navigate('/detail', {
-      state: { id: docid }
+      state: { id: docid, from: 'search' }
     })
   }
 

@@ -1,15 +1,14 @@
 .app {
   text-align: center;
+  margin: 0 auto;
+  min-width: 320px;
+  max-width: 768px;
 
   .app-content {
     min-height: calc(100vh - 48px);
     background-color: #fff;
     font-size: calc(10px + 2vmin);
     color: #333;
-
-    .rv-sticky {
-      // border-bottom: 1px solid #eee;
-    }
 
     .rv-swiper {
       overflow: auto;
@@ -29,4 +28,14 @@
       background-color: #ef4645;
     }
   }
+}
+
+// 主题样式覆盖
+.rv-nav-bar {
+  background-color: var(--rv-red) !important;
+}
+
+.rv-nav-bar .rv-icon,
+.rv-nav-bar__text {
+  color: var(--rv-white) !important;
 }

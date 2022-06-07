@@ -30,17 +30,13 @@ export default function HotList () {
     listRef.current?.check();
   }
 
-  const renderRow = (row: newsItem, i: number) => {
-    return <ListItem data={row} key={i}></ListItem>
-  }
-
   return (
     <>
       <PullRefresh successText="刷新成功" onRefresh={onRefresh}>
         <List className='data-list' ref={listRef} finished={finished} errorText="请求失败，点击重新加载" onLoad={onLoad}>
           {dataList.length
             ? dataList.map((row: any, i: number) => {
-              return renderRow(row, i)
+              return <ListItem data={row} key={i} activeTab="hot"></ListItem>
             })
             : <Empty description="暂无数据" />}
         </List>

@@ -12,7 +12,12 @@
 
     .img-wrap {
       flex: 0 0 auto;
-      width: 140px;
+      width: 2.34rem;
+      margin-top: 0;
+
+      .img {
+        height: 1.46rem;
+      }
     }
   }
 
@@ -23,6 +28,7 @@
 
   .img-wrap {
     display: flex;
+    margin-top: 0.12rem;
 
     .rv-image {
       margin: 0 1px;
@@ -39,8 +45,8 @@
   }
 
   .new-title {
-    line-height: 24px;
-    font-size: 16px;
+    line-height: .45rem;
+    font-size: .34rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -52,13 +58,13 @@
   }
 
   .detail {
-    margin-top: 5px;
+    margin-top: 0.12rem;
     text-align: left;
 
     &>div {
       display: inline-block;
-      margin-right: 8px;
-      font-size: var(--rv-font-size-sm);
+      margin-right: 0.12rem;
+      font-size: 0.23rem;
       color: var(--rv-gray-6);
     }
 

@@ -64,12 +64,13 @@
       justify-content: space-between;
 
       .tag {
-        font-size: 12px;
+        font-size: .24rem;
+        flex-shrink: 0;
       }
 
       .title {
-        line-height: 24px;
-        font-size: 16px;
+        line-height: .45rem;
+        font-size: .34rem;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
@@ -189,6 +190,7 @@ article {
     padding: 20px 15px;
     word-wrap: break-word;
     color: #404040;
+
     .title {
       font-size: 20px;
       font-weight: 700;
@@ -196,6 +198,7 @@ article {
       color: #404040;
       text-align: left;
     }
+
     .head-info {
       line-height: 14px;
       font-size: 12px;
@@ -204,11 +207,13 @@ article {
       color: #888;
       text-align: left;
     }
+
     p {
       margin: 15px 0;
       text-align: justify;
       text-indent: 2em;
     }
+
     #video-wrap {
       text-indent: unset;
     }
