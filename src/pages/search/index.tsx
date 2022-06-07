@@ -107,7 +107,7 @@ function SearchPage (props: any) {
 
   const toDetail = (docid: string) => {
     navigate('/detail', {
-      state: { id: docid }
+      state: { id: docid, from: 'search' }
     })
   }
 

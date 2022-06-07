@@ -55,7 +55,7 @@ export default function HotList () {
         }
         {
           item.data.map((row: newsItem, i: number) => {
-            return <ListItem data={row} key={i}></ListItem>
+            return <ListItem data={row} key={i} activeTab="original"></ListItem>
           })
         }
       </div>

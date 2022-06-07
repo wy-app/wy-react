@@ -2,7 +2,7 @@ import { memo, useRef, useState, useEffect } from 'react'
 import { getDetailData } from '@/api'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 import './index.scss'
-import { Cell, List, Empty, Search, Image, Loading, Sticky } from 'react-vant'
+import { Cell, List, Empty, Search, Image, Loading, NavBar, Sticky } from 'react-vant'
 interface DetailDataType {
   title: string
   docid: string
@@ -12,11 +12,12 @@ interface DetailDataType {
   ptime: string
   source: string
 }
-function Detail () {
+function Detail (props: any) {
   const localtion = useLocation()
-  const { id } = localtion.state as any
+  const { id, activeTab, from } = localtion.state as any
   if (!id) return <Empty description="暂无数据" />
   const [detailData, setDetailData] = useState({} as DetailDataType)
+  const navigate = useNavigate()
 
   // 请求数据
   const onLoad = async () => {
@@ -47,8 +48,25 @@ function Detail () {
     }
   }, [id])
 
+  const goBack = () => {
+    if (from === 'search') {
+      navigate('/search', {
+        state: { activeTab: activeTab }
+      })
+    } else {
+      navigate('/', {
+        state: { activeTab: activeTab }
+      })
+    }
+  }
+
   return (
     <article >
+      <Sticky {...props}>
+        <NavBar title="" leftText="返回" rightText=""
+          onClickLeft={() => goBack()} // onClickRight={() => Toast('按钮')}
+        />
+      </Sticky>
       <div className='detail-content'>
         <div className='title'>{detailData.title}</div>
         <div className='head-info'>

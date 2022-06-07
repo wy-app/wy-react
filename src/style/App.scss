@@ -29,3 +29,13 @@
     }
   }
 }
+
+// 主题样式覆盖
+.rv-nav-bar {
+  background-color: var(--rv-red) !important;
+}
+
+.rv-nav-bar .rv-icon,
+.rv-nav-bar__text {
+  color: var(--rv-white) !important;
+}
