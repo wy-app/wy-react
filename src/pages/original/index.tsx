@@ -44,9 +44,9 @@ export default function HotList () {
     listRef.current?.check()
   }
 
-  const renderRow = (item: any) => {
+  const renderRow = (item: any, i: number) => {
     return (
-      <>
+      <div key={i}>
         {typeMap[item.type]
           ? <div className='sec-top'>
             <h3 className='title'>{typeMap[item.type]}</h3>
@@ -58,7 +58,7 @@ export default function HotList () {
             return <ListItem data={row} key={i}></ListItem>
           })
         }
-      </>
+      </div>
     )
   }
 

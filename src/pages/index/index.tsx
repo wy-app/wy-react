@@ -3,6 +3,7 @@ import { useState } from 'react'
 import HotList from '../hot'
 import OriginalList from '../original'
 import Header from '../../components/Header/index'
+import './index.scss'
 
 const Index = () => {
   const [tabList, setTabList] = useState([{

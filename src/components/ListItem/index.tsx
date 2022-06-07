@@ -23,7 +23,7 @@ function ListItem (props: listItemProp) {
               {/* <div className='reply'>{row.tcount}跟贴</div> */}
             </div>
           </div>
-          {row.imgsrc ? <div className='img-wrap'><Image fit="cover" height="85" src={row.imgsrc} /></div> : null}
+          {row.imgsrc ? <div className='img-wrap'><Image className='img' fit="cover" src={row.imgsrc} /></div> : null}
         </div >
       )
       : <>{
