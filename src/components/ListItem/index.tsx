@@ -27,7 +27,7 @@ function ListItem (props: listItemProp) {
   const row = props.data as newsItem
   return <div onClick={() => toDetail(row)}>
     {
-      (row.skipType === 'doc' || row.skipType === 'video')
+      (row.skipType === 'doc' || row.skipType === 'video' || row.postid)
         ? (
           <div className="data-row flex">
             <div className='content'>
@@ -43,7 +43,7 @@ function ListItem (props: listItemProp) {
           </div >
         )
         : <>{
-          row.picInfo.length >= 3
+          row.picInfo && row.picInfo.length >= 3
             ? (
               <div className="data-row" >
                 <div className='new-title'>{row.title}</div>
@@ -62,11 +62,12 @@ function ListItem (props: listItemProp) {
               <div className="data-row">
                 <div className='new-title'>{row.title}</div>
                 {row.picInfo ? <div className='img-wrap'><Image fit="cover" height="200" src={row.picInfo[0].url} /></div> : null}
+                {/* {row.imgsrc ? <div className='img-wrap'><Image fit="cover" height="200" src={row.imgsrc} /></div> : null} */}
                 <div className='detail'>
                   <div className='news-tag'>{row.tag || ''}</div>
                   <div className='news-source'>{row.source || ''}</div>
                   <div className='ptime'>{row.ptime ? row.ptime.slice(0, -3) : ''}</div>
-                  <div className='reply'>{row.tcount}跟贴</div>
+                  <div className='reply'>{row.tcount || row.replyCount}跟贴</div>
                 </div>
               </div >
             )

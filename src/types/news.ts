@@ -14,6 +14,8 @@ export interface newsItem {
   tag?: string
   picInfo: [any]
   imgsrc3gtype: number
-  tcount: number
+  tcount?: number
+  replyCount?: number
   imgurl?: [any]
+  postid?: string
 }

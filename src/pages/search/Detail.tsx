@@ -33,7 +33,7 @@ function Detail (props: any) {
       detail.body = detail.body.replace(e.ref, `<img src="${e.src}" width="100%" />`)
     })
     detail.video && detail.video.forEach((e: any) => {
-      detail.body = detail.body.replace(e.ref, `</p><video width="100%" controls autoplay>
+      detail.body = detail.body.replace(e.ref, `</p><video width="100%" controls>
       <source src="${e.url_mp4}" type="video/mp4">
     </video>`)
     })

@@ -2,6 +2,7 @@ import { Tabs } from 'react-vant'
 import { useState } from 'react'
 import HotList from '../hot'
 import OriginalList from '../original'
+import RecommendList from '../recommend'
 import Header from '../../components/Header/index'
 import './index.scss'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
@@ -43,7 +44,7 @@ const Index = () => {
       case 0:
         return <div></div>
       case 1:
-        return <div></div>
+        return <RecommendList />
       case 2:
         return <OriginalList />
       case 3:
