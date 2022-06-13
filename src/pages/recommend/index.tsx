@@ -16,8 +16,8 @@ export default function RecommendList () {
     if (!res) return
     const matchArr = res.match(/callback_fyz\((.*)\)/)
     const resultStr: any = JSON.parse(matchArr[1])
-    const { T1348647853363 } = JSON.parse(resultStr)
-    const data = T1348647853363
+    const { T1348648517839 } = JSON.parse(resultStr)
+    const data = T1348648517839
     console.log(data)
     const list = dataList.concat(data)
     setDataList(list)
