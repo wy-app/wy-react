@@ -18,7 +18,17 @@
   }
 
   .search-wrap {
-
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background: rgba(0,0,0,.1);
+    border-radius: 0.35rem;
+    color: #fff;
+    font-size: .3rem;
+    height: 0.64rem;
+    // justify-content: flex-start;
+    padding: 0 0.1rem 0 0.2rem;
+    position: relative;
     .rv-search__content {
       background-color: rgba(0, 0, 0, .1);
     }
@@ -60,5 +70,43 @@
     border-radius: 50%;
     padding: 5px;
     background: rgba(1, 1, 1, 0.1);
+  }
+
+  .header-box {
+    position: relative;
+
+    .swiper-wrapper {
+      // position: absolute;
+      // top: 0;
+      width: 90%;
+      height: 100%;
+
+      .news-swiper {
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .rv-swiper__slide {
+        // height: 0.96rem;
+
+        .rv-swiper-item {
+          // height: 0.96rem;
+          overflow: hidden;
+          padding: 0.05rem 0.1rem;
+          width: auto;
+
+          .hotWord {
+            line-height: 0.56rem;
+            font-size: 0.27rem;
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: left;
+            // box-sizing: content-box;
+          }
+        }
+      }
+    }
   }
 }
