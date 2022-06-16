@@ -3,7 +3,7 @@ import type { ListInstance } from 'react-vant';
 import { getHotWord, getSearch, getSearchDetailList } from '@/api'
 import { Cell, List, Empty, Search, Image, Loading, Sticky } from 'react-vant'
 import './index.scss'
-import { /* BrowserRouter as Router, Switch, useParams, useLocation, */ useNavigate } from 'react-router-dom'
+import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 import { Search as SearchIcon } from '@react-vant/icons'
 import { newsItem } from '../../types/news'
 import ListItem from '../../components/ListItem'
@@ -17,8 +17,19 @@ function SearchPage (props: any) {
   const [finished, setFinished] = useState(false)
   const [isLoding, setIsLoding] = useState(false)
   const [status, setStatus] = useState('default')
-  const [vauge, setVauge] = useState('');
+  const [vauge, setVauge] = useState('')
+  const [placeholder, setPlaceholder] = useState('请输入搜索关键词')
   const navigate = useNavigate()
+  const localtion = useLocation()
+  const { hotWord } = localtion.state as any
+  useEffect(() => {
+    console.log('componentDidMount')
+    hotWord && setVauge(hotWord)
+    hotWord && setPlaceholder(hotWord)
+    return () => {
+      console.log('componentWillUnmount')
+    }
+  }, [])
 
   // 请求数据
   const onLoad = async () => {
@@ -55,6 +66,7 @@ function SearchPage (props: any) {
   }
   // 点击查完整搜索：精确搜索
   const searchDetail = (query: string) => {
+    if (!query) return
     setStatus('detail')
     const word = query.replace('<em>', '').replace('</em>', '')
     setVauge(word)
@@ -78,6 +90,7 @@ function SearchPage (props: any) {
       navigate('/')
     } else {
       setStatus('default')
+      setVauge('')
     }
   }
 
@@ -137,7 +150,7 @@ function SearchPage (props: any) {
   return (
     <div className='search-page'>
       <Sticky {...props}>
-        <Search className='search-head' shape="round" background="#fff" value={vauge} onChange={onSearch} onClear={onClear} placeholder="请输入搜索关键词" showAction onCancel={onCancel} />
+        <Search className='search-head' shape="round" background="#fff" value={vauge} onChange={onSearch} onFocus={() => searchDetail(vauge)} onClear={onClear} placeholder={placeholder} showAction onCancel={onCancel} />
       </Sticky>
       {
         isLoding ? <Loading type="ball" /> : null

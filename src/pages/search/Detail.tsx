@@ -2,7 +2,8 @@ import { memo, useRef, useState, useEffect } from 'react'
 import { getDetailData } from '@/api'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 import './index.scss'
-import { Cell, List, Empty, Search, Image, Loading, NavBar, Sticky } from 'react-vant'
+import { Cell, List, Empty, Search, Image, Loading, NavBar, Sticky, ShareSheet } from 'react-vant'
+import { ShareO } from '@react-vant/icons'
 interface DetailDataType {
   title: string
   docid: string
@@ -12,12 +13,20 @@ interface DetailDataType {
   ptime: string
   source: string
 }
+const shareOptions = [
+  { name: '微信', icon: 'wechat' },
+  { name: '微博', icon: 'weibo' },
+  { name: '复制链接', icon: 'link' },
+  { name: '分享海报', icon: 'poster' },
+  { name: '二维码', icon: 'qrcode' },
+]
 function Detail (props: any) {
   const localtion = useLocation()
   const { id, activeTab, from } = localtion.state as any
   if (!id) return <Empty description="暂无数据" />
   const [detailData, setDetailData] = useState({} as DetailDataType)
   const navigate = useNavigate()
+  const [showShare, setShowShare] = useState(false)
 
   // 请求数据
   const onLoad = async () => {
@@ -63,10 +72,17 @@ function Detail (props: any) {
   return (
     <article >
       <Sticky {...props}>
-        <NavBar title="" leftText="返回" rightText=""
-          onClickLeft={() => goBack()} // onClickRight={() => Toast('按钮')}
+        <NavBar title="" leftText="返回" rightText={<ShareO fontSize={21} />}
+          onClickLeft={() => goBack()} onClickRight={() => setShowShare(true)}
         />
       </Sticky>
+      <ShareSheet visible={showShare} options={shareOptions} title="立即分享给好友"
+        onCancel={() => setShowShare(false)}
+        onSelect={(option, index) => {
+          console.log(option, index)
+          setShowShare(false)
+        }}
+      />
       <div className='detail-content'>
         <div className='title'>{detailData.title}</div>
         <div className='head-info'>

@@ -9,7 +9,10 @@ const hotWord = 'http://gw.m.163.com/search/api/v1/pc-wap/hot-word' // 搜索默
 const searchApi = 'http://gw.m.163.com/search/api/v1/pc-wap/sug' // 模糊搜索标题
 const searchDetail = 'http://c.m.163.com/fe/api/search/query' // 精确搜索字段结果
 const detailAPi = `http://c.m.163.com/nc/article/docid/full.html` // 详情
-const recommendAPi = `http://c.m.163.com/nc/article/headline/T1348647853363/PageRange.html` // 推荐http://c.m.163.com/nc/article/headline/T1348647853363/0-20.html
+// 推荐 http://c.m.163.com/nc/article/headline/T1348647853363/0-20.html
+// 娱乐 http://c.3g.163.com/nc/article/list/T1348648517839/0-20.html
+const recommendAPi = `http://c.m.163.com/nc/article/list/T1348648517839/PageRange.html`
+const rollingAPi = 'http://gw.m.163.com/search/api/v1/pc-wap/rolling-word'
 
 export const getHostNews = (callbackObj: any) => {
   return get(`${base}?key=wy&url=${hotUrl}`, callbackObj)
@@ -21,6 +24,10 @@ export const getOriginalNews = (callbackObj: any) => {
 
 export const getHotWord = (callbackObj: any) => {
   return get(`${base}?key=wy&url=${hotWord}`, callbackObj)
+}
+
+export const getRollingWord = (callbackObj: any) => {
+  return get(`${base}?key=wy&url=${rollingAPi}`, callbackObj)
 }
 
 export const getSearch = (callbackObj: any, params: any) => {

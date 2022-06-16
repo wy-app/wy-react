@@ -30,6 +30,21 @@ const Index = () => {
     title: '热点',
     value: 'hot',
     path: ''
+  }, {
+    id: 4,
+    title: '推荐',
+    value: 'recommend',
+    path: ''
+  }, {
+    id: 5,
+    title: '原创',
+    value: 'original',
+    path: ''
+  }, {
+    id: 6,
+    title: '热点',
+    value: 'hot',
+    path: ''
   }])
   setTimeout(() => {
     if (localtion.state) {
