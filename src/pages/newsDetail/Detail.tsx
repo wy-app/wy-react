@@ -1,8 +1,8 @@
 import { memo, useRef, useState, useEffect } from 'react'
 import { getDetailData } from '@/api'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
-import './index.scss'
-import { Cell, List, Empty, Search, Image, Loading, NavBar, Sticky, ShareSheet } from 'react-vant'
+import './detail.scss'
+import { Cell, List, Empty, Search, Image, Loading, NavBar, Sticky, ShareSheet, Button } from 'react-vant'
 import { ShareO } from '@react-vant/icons'
 interface DetailDataType {
   title: string
@@ -12,6 +12,7 @@ interface DetailDataType {
   ipLocation: string
   ptime: string
   source: string
+  replyCount: number
 }
 const shareOptions = [
   { name: '微信', icon: 'wechat' },
@@ -23,6 +24,7 @@ const shareOptions = [
 function Detail (props: any) {
   const localtion = useLocation()
   const { id, activeTab, from } = localtion.state as any
+  debugger
   if (!id) return <Empty description="暂无数据" />
   const [detailData, setDetailData] = useState({} as DetailDataType)
   const navigate = useNavigate()
@@ -69,31 +71,50 @@ function Detail (props: any) {
     }
   }
 
+  const navRightClick = (e: any) => {
+    if (!e || !e.target) return
+    const className = e.target.className
+    if (className.includes('shareIcon')) {
+      setShowShare(true)
+    } else if (className.includes('replyBtn')) {
+      navigate('/comment', {
+        state: { docid: id }
+      })
+    }
+  }
+
   return (
     <article >
-      <Sticky {...props}>
-        <NavBar title="" leftText="返回" rightText={<ShareO fontSize={21} />}
-          onClickLeft={() => goBack()} onClickRight={() => setShowShare(true)}
-        />
-      </Sticky>
-      <ShareSheet visible={showShare} options={shareOptions} title="立即分享给好友"
-        onCancel={() => setShowShare(false)}
-        onSelect={(option, index) => {
-          console.log(option, index)
-          setShowShare(false)
-        }}
-      />
-      <div className='detail-content'>
-        <div className='title'>{detailData.title}</div>
-        <div className='head-info'>
-          <span>{detailData.ptime}</span>
-          <span>{detailData.ipLocation}</span>
-          <div>{detailData.source}</div>
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: detailData.body }}></div>
-        <p>{detailData.statement}</p>
-      </div>
+      {
+        detailData.title
+          ? <>
+            <Sticky {...props}>
+              <NavBar title="" leftText="返回" rightText={<><Button className='replyBtn' {...props} round type="danger" plain size="mini">{`${detailData.replyCount}人参与跟帖`}</Button><ShareO className='shareIcon' fontSize={21} /></>}
+                onClickLeft={() => goBack()} onClickRight={() => navRightClick(event)}
+              />
+            </Sticky>
+            <ShareSheet visible={showShare} options={shareOptions} title="立即分享给好友"
+              onCancel={() => setShowShare(false)}
+              onSelect={(option, index) => {
+                console.log(option, index)
+                setShowShare(false)
+              }}
+            />
+            <div className='detail-content'>
+              <div className='title'>{detailData.title}</div>
+              <div className='head-info'>
+                <span>{detailData.ptime}</span>
+                <span>{detailData.ipLocation}</span>
+                <div>{detailData.source}</div>
+              </div>
+              <div dangerouslySetInnerHTML={{ __html: detailData.body }}></div>
+              <p>{detailData.statement}</p>
+            </div>
+          </>
+          : <Loading className='pageLoading' type="ball" />
+      }
     </article>
+
   )
 }
 

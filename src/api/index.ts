@@ -13,6 +13,10 @@ const detailAPi = `http://c.m.163.com/nc/article/docid/full.html` // 详情
 // 娱乐 http://c.3g.163.com/nc/article/list/T1348648517839/0-20.html
 const recommendAPi = `http://c.m.163.com/nc/article/list/T1348648517839/PageRange.html`
 const rollingAPi = 'http://gw.m.163.com/search/api/v1/pc-wap/rolling-word'
+// 热门评论
+const comments_hotList = `http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/DOCID/comments/hotList?offset=0&limit=5&headLimit=3&tailLimit=2&ibc=newswap&showLevelThreshold=5`
+// 最新评论
+const comments_newList = `http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/DOCID/comments/newList?offset=0&limit=5&headLimit=3&tailLimit=2&ibc=newswap&showLevelThreshold=5&callback=callback_1655710210922`
 
 export const getHostNews = (callbackObj: any) => {
   return get(`${base}?key=wy&url=${hotUrl}`, callbackObj)
@@ -55,4 +59,15 @@ export const getRecommendNews = (callbackObj: any, params: any) => {
   const { currentPage, pageSize } = params
   const pageRange = `${(currentPage - 1) * pageSize}-${currentPage * pageSize}`
   return get(`${base}?key=wy&url=${recommendAPi.replace('PageRange', pageRange)}`, callbackObj)
+}
+
+export const getCommentsHotList = (callbackObj: any, params: any) => {
+  // const { currentPage, pageSize } = params
+  // const pageRange = `${(currentPage - 1) * pageSize}-${currentPage * pageSize}`
+  return get(`${base}?key=wy&url=${comments_hotList.replace('DOCID', params.docid)}`, callbackObj)
+}
+export const getCommentsNewList = (callbackObj: any, params: any) => {
+  // const { currentPage, pageSize } = params
+  // const pageRange = `${(currentPage - 1) * pageSize}-${currentPage * pageSize}`
+  return get(`${base}?key=wy&url=${comments_newList.replace('DOCID', params.docid)}`, callbackObj)
 }
