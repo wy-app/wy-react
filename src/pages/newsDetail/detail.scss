@@ -1,0 +1,75 @@
+
+article {
+  .replyBtn {
+    margin-right: 20px;
+    padding: 0 10px;
+  }
+  .detail-content {
+    font-size: 16px;
+    line-height: 1.5em;
+    padding: 20px 15px;
+    word-wrap: break-word;
+    color: #404040;
+
+    .title {
+      font-size: 20px;
+      font-weight: 700;
+      padding: 0 0 10px;
+      color: #404040;
+      text-align: left;
+    }
+
+    .head-info {
+      line-height: 14px;
+      font-size: 12px;
+      font-weight: 400;
+      margin: 0 0 10px;
+      color: #888;
+      text-align: left;
+    }
+
+    p {
+      margin: 15px 0;
+      text-align: justify;
+      text-indent: 2em;
+    }
+
+    #video-wrap {
+      text-indent: unset;
+    }
+  }
+}
+
+.comment-wrap {
+  padding-bottom: 1rem;
+  .skeleton-wrap{
+    padding: 0.1rem 0.2rem;
+    .skeleton-box {
+      border: 1px solid red;
+      margin-bottom: 0.1rem;
+      .skeleton-content {
+        width: 100%;
+        position: relative;
+        .vote-wrap {
+          position: absolute;
+          right: 10px;
+          top: 0;
+          font-size: 0.24rem;
+          color: #666;
+          font-weight: lighter;
+          .vote-icon {
+            vertical-align: text-bottom;
+            margin-left: 0.12rem;
+            font-size: 0.3rem;
+          }
+        }
+      }
+      img {
+        width: 0.5rem;
+        height: 0.5rem;
+        margin-right: 0.1rem;
+        border-radius: 50%;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 .app {
-  text-align: center;
+  // text-align: center;
   margin: 0 auto;
   min-width: 320px;
   max-width: 768px;
@@ -27,6 +27,13 @@
     .rv-tabs__line {
       background-color: #ef4645;
     }
+  }
+  .pageLoading {
+    text-align: center;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
   }
 }
 
