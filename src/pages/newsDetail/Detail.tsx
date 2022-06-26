@@ -24,7 +24,6 @@ const shareOptions = [
 function Detail (props: any) {
   const localtion = useLocation()
   const { id, activeTab, from } = localtion.state as any
-  debugger
   if (!id) return <Empty description="暂无数据" />
   const [detailData, setDetailData] = useState({} as DetailDataType)
   const navigate = useNavigate()
@@ -84,7 +83,7 @@ function Detail (props: any) {
   }
 
   return (
-    <article >
+    <article className='detail-page'>
       {
         detailData.title
           ? <>
