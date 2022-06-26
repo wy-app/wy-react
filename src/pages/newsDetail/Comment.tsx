@@ -88,51 +88,61 @@ function Comment (props: any) {
                 return <Flex className={arr.length === 1 ? 'skeleton-box outter' : 'skeleton-box'}>
                   {arr.length === 1
                     ? ((obj.user.avatar) ? <img alt="" src={obj.user.avatar} /> : <UserO fontSize={27} color="#aaa" />)
-                    : <i className='NO'>{i}f</i>
+                    : ''
                   }
                   <div className='skeleton-content'>
-                    <Typography.Title className='skeleton-title' level={5}>
-                      {obj.user.nickname || '火星网友'}
-                      {obj.user.titleInfo
-                        ? <Typography.Text type="secondary" className='titleInfo'>
-                          <img className="titleIcon" src={obj.user.titleInfo.titleIcon} />
-                          {obj.user.titleInfo.title}
+                    <div className='skeleton-info'>
+                      <Typography.Title className='skeleton-title' level={5}>
+                        {arr.length !== 1 && <i className='NO'>1</i>}
+                        {obj.user.nickname || '火星网友'}
+                        {obj.user.titleInfo
+                          ? <Typography.Text type="secondary" className='titleInfo'>
+                            <img className="titleIcon" src={obj.user.titleInfo.titleIcon} />
+                            {obj.user.titleInfo.title}
+                          </Typography.Text>
+                          : ''
+                        }
+                        <div className='vote-wrap'>{obj.vote}<GoodJobO className='vote-icon' /></div>
+                      </Typography.Title>
+                      <div>
+                        <Typography.Text type='secondary' className='location'>{obj.user.location}</Typography.Text>
+                        {i !== 0 && <Typography.Text type="secondary" className='createTime'>{transformTime(obj.createTime)}</Typography.Text>}
+                      </div>
+                      <div className='content'>
+                        <Typography.Text >
+                          <div dangerouslySetInnerHTML={{ __html: obj.content }}></div>
                         </Typography.Text>
-                        : ''
-                      }
-                      <div className='vote-wrap'>{obj.vote}<GoodJobO className='vote-icon' /></div>
-                    </Typography.Title>
-                    <div>
-                      <Typography.Text type='secondary' className='location'>{obj.user.location}</Typography.Text>
-                    </div>
-                    <div>
-                      <Typography.Text ><div dangerouslySetInnerHTML={{ __html: obj.content }}></div></Typography.Text>
-                    </div>
-                    <div>
-                      <Typography.Text type="secondary">{transformTime(obj.createTime)}</Typography.Text>
+                      </div>
+                      {i === 0 && <div><Typography.Text type="secondary" className='createTime'>{transformTime(obj.createTime)}</Typography.Text></div>}
                     </div>
                   </div>
-                </Flex>
+                </Flex >
               } else {
                 const id = ids[i + 1]
                 return <Flex className={i === 0 ? 'skeleton-box outter' : 'skeleton-box'}>
                   {i === 0
                     ? (obj.user) ? <img alt="" src={obj.user.avatar} /> : <UserO />
-                    : <i className='NO'>{i}y</i>}
+                    : ''}
                   <div className='skeleton-content'>
-                    <Typography.Title className='skeleton-title' level={5}>
-                      {obj.user.nickname}<Typography.Text type="secondary">{obj.user.titleInfo && obj.user.titleInfo.title}</Typography.Text>
-                      <div className='vote-wrap'>{obj.vote}<GoodJobO className='vote-icon' /></div>
-                    </Typography.Title>
-                    <Typography.Text className='location' >{obj.user.location}</Typography.Text>
-                    <div>
-                      {loopReply(commentMap[id], i + 1, ids, id)}
-                    </div>
-                    <Typography.Text >
-                      <div dangerouslySetInnerHTML={{ __html: obj.content }}></div>
-                    </Typography.Text>
-                    <div>
-                      <Typography.Text type="secondary">{transformTime(obj.createTime)}</Typography.Text>
+                    {i !== 0 && <div>{loopReply(commentMap[id], i + 1, ids, id)}</div>}
+                    <div className='skeleton-info'>
+                      <Typography.Title className='skeleton-title' level={5}>
+                        {i !== 0 && <i className='NO'>{ids.length - i}</i>
+                        }{obj.user.nickname || '火星网友'}
+                        <Typography.Text type="secondary" className='titleInfo'>{obj.user.titleInfo && obj.user.titleInfo.title}</Typography.Text>
+                        <div className='vote-wrap'>{obj.vote}<GoodJobO className='vote-icon' /></div>
+                      </Typography.Title>
+                      <div>
+                        <Typography.Text className='location' type="secondary">{obj.user.location}</Typography.Text>
+                        {i !== 0 && <Typography.Text type="secondary" className='createTime'>{transformTime(obj.createTime)}</Typography.Text>}
+                      </div>
+                      {i === 0 && <div>{loopReply(commentMap[id], i + 1, ids, id)}</div>}
+                      <div className='content'>
+                        <Typography.Text >
+                          <div dangerouslySetInnerHTML={{ __html: obj.content }}></div>
+                        </Typography.Text>
+                      </div>
+                      {i === 0 && <div><Typography.Text type="secondary" className='createTime'>{transformTime(obj.createTime)}</Typography.Text></div>}
                     </div>
                   </div>
                 </Flex>
@@ -148,7 +158,7 @@ function Comment (props: any) {
             )
           })
         }
-      </div>
+      </div >
     )
   }
   return (

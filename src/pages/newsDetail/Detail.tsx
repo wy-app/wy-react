@@ -83,7 +83,7 @@ function Detail (props: any) {
   }
 
   return (
-    <article >
+    <article className='detail-page'>
       {
         detailData.title
           ? <>
