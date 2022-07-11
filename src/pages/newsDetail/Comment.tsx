@@ -84,10 +84,13 @@ function Comment (props: any) {
             let commentReactDom: any = ''
             const loopReply = (obj: any, i: number, arr: string[], id: string) => {
               if (!obj) return
+              if (obj.imageInfo && obj.imageInfo.url) {
+                obj.content = obj.content.replace('[图片]', `<Image width="150" height="150" fit="cover" src=${obj.imageInfo.url} title="图片" />`)
+              }
               if (arr.length === 1 || arr.length - 1 === i) {
                 return <Flex className={arr.length === 1 ? 'skeleton-box outter' : 'skeleton-box'}>
                   {arr.length === 1
-                    ? ((obj.user.avatar) ? <img alt="" src={obj.user.avatar} /> : <UserO fontSize={27} color="#aaa" />)
+                    ? ((obj.user.avatar) ? <img className='avatar' alt="" src={obj.user.avatar} /> : <UserO fontSize={27} color="#aaa" />)
                     : ''
                   }
                   <div className='skeleton-content'>
@@ -121,7 +124,7 @@ function Comment (props: any) {
                 const id = ids[i + 1]
                 return <Flex className={i === 0 ? 'skeleton-box outter' : 'skeleton-box'}>
                   {i === 0
-                    ? (obj.user) ? <img alt="" src={obj.user.avatar} /> : <UserO />
+                    ? (obj.user) ? <img className='avatar' alt="" src={obj.user.avatar} /> : <UserO />
                     : ''}
                   <div className='skeleton-content'>
                     {i !== 0 && <div>{loopReply(commentMap[id], i + 1, ids, id)}</div>}

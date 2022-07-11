@@ -72,10 +72,10 @@ function Detail (props: any) {
 
   const navRightClick = (e: any) => {
     if (!e || !e.target) return
-    const className = e.target.className
-    if (className.includes('shareIcon')) {
+    const classList = e.target.classList && [...e.target.classList]
+    if (classList.includes('shareIcon')) {
       setShowShare(true)
-    } else if (className.includes('replyBtn')) {
+    } else if (classList.includes('replyBtn')) {
       navigate('/comment', {
         state: { docid: id }
       })
