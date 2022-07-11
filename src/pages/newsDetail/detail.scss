@@ -83,9 +83,9 @@ article.detail-page {
             left: 8px;
           }
           .titleInfo {
-            font-size: 0.12rem;
-            background-color: rgba(0,0,0,0.08);
-            border-radius: 10px;
+            font-size: 0.2rem;
+            background-color: rgba(0,0,0,0.03);
+            border-radius: 8px;
             padding: 0 5px;
             margin-left: 5px;
           }
@@ -93,6 +93,7 @@ article.detail-page {
             width: 15px;
             height: 15px;
             vertical-align: middle;
+            margin-right: 2px;
           }
         }
         .vote-wrap {
@@ -117,7 +118,7 @@ article.detail-page {
           font-size: 12px;
         }
       }
-      img {
+      img.avatar {
         width: 0.5rem;
         height: 0.5rem;
         margin-right: 0.1rem;
