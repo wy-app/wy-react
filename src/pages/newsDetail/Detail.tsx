@@ -1,9 +1,11 @@
 import { memo, useRef, useState, useEffect } from 'react'
-import { getDetailData } from '@/api'
+import { getDetailData, getCommentsHotList } from '@/api'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 import './detail.scss'
-import { Cell, List, Empty, Search, Image, Loading, NavBar, Sticky, ShareSheet, Button } from 'react-vant'
+import { Flex, List, Empty, Search, Image, Loading, NavBar, Sticky, ShareSheet, Button, NoticeBar } from 'react-vant'
 import { ShareO } from '@react-vant/icons'
+import RenderList from './RenderList'
+
 interface DetailDataType {
   title: string
   docid: string
@@ -28,6 +30,9 @@ function Detail (props: any) {
   const [detailData, setDetailData] = useState({} as DetailDataType)
   const navigate = useNavigate()
   const [showShare, setShowShare] = useState(false)
+  // 热门评论
+  const [hotCommentMap, setHotCommentMap] = useState({} as any)
+  const [hotIds, setHotIds] = useState([] as any)
 
   // 请求数据
   const onLoad = async () => {
@@ -51,9 +56,24 @@ function Detail (props: any) {
     setDetailData(detail)
   }
 
+  // 获取热评数据
+  const getHotList = async () => {
+    const res: any = await getCommentsHotList({ callback: 'callback_fyz' }, { docid: id })
+    if (!res) return
+    const matchArr = res.match(/callback_fyz\((.*)\)/)
+    const resultStr = JSON.parse(matchArr[1])
+    const data = JSON.parse(resultStr)
+    console.log(data)
+    setHotCommentMap(data.comments)
+    setHotIds(data.commentIds)
+  }
+
   useEffect(() => {
     if (id) {
-      const timeout = setTimeout(() => onLoad());
+      const timeout = setTimeout(() => {
+        getHotList()
+        onLoad()
+      })
       return () => clearTimeout(timeout)
     }
   }, [id])
@@ -83,37 +103,49 @@ function Detail (props: any) {
   }
 
   return (
-    <article className='detail-page'>
-      {
-        detailData.title
-          ? <>
-            <Sticky {...props}>
-              <NavBar title="" leftText="返回" rightText={<><Button className='replyBtn' {...props} round type="danger" plain size="mini">{`${detailData.replyCount}人参与跟帖`}</Button><ShareO className='shareIcon' fontSize={21} /></>}
-                onClickLeft={() => goBack()} onClickRight={() => navRightClick(event)}
+    <>
+      <article className='detail-page'>
+        {
+          detailData.title
+            ? <>
+              <Sticky {...props}>
+                <NavBar title="" leftText="返回" rightText={<><Button className='replyBtn' {...props} round type="danger" plain size="mini">{`${detailData.replyCount}人参与跟帖`}</Button><ShareO className='shareIcon' fontSize={21} /></>}
+                  onClickLeft={() => goBack()} onClickRight={() => navRightClick(event)}
+                />
+              </Sticky>
+              <ShareSheet visible={showShare} options={shareOptions} title="立即分享给好友"
+                onCancel={() => setShowShare(false)}
+                onSelect={(option, index) => {
+                  console.log(option, index)
+                  setShowShare(false)
+                }}
               />
-            </Sticky>
-            <ShareSheet visible={showShare} options={shareOptions} title="立即分享给好友"
-              onCancel={() => setShowShare(false)}
-              onSelect={(option, index) => {
-                console.log(option, index)
-                setShowShare(false)
-              }}
-            />
-            <div className='detail-content'>
-              <div className='title'>{detailData.title}</div>
-              <div className='head-info'>
-                <span>{detailData.ptime}</span>
-                <span>{detailData.ipLocation}</span>
-                <div>{detailData.source}</div>
+              <div className='detail-content'>
+                <div className='title'>{detailData.title}</div>
+                <div className='head-info'>
+                  <span>{detailData.ptime}</span>
+                  <span>{detailData.ipLocation}</span>
+                  <div>{detailData.source}</div>
+                </div>
+                <div dangerouslySetInnerHTML={{ __html: detailData.body }}></div>
+                <p>{detailData.statement}</p>
               </div>
-              <div dangerouslySetInnerHTML={{ __html: detailData.body }}></div>
-              <p>{detailData.statement}</p>
-            </div>
-          </>
-          : <Loading className='pageLoading' type="ball" />
-      }
-    </article>
-
+            </>
+            : <Loading className='pageLoading' type="ball" />
+        }
+      </article>
+      <div className='comment-wrap' >
+        {
+          hotIds.length
+            ? <>
+              <NoticeBar color="#f44336" background="#fff">热门跟帖</NoticeBar>
+              {/* {renderList(hotIds, hotCommentMap)} */}
+              <RenderList ids={hotIds} commentMap={hotCommentMap}></RenderList>
+            </>
+            : ''
+        }
+      </div>
+    </>
   )
 }
 
