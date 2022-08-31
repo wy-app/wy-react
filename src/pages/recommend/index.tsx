@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import type { ListInstance } from 'react-vant';
+import type { ListInstance } from 'react-vant'
 import { getRecommendNews } from '@/api'
 import { Cell, List, Empty, Image, PullRefresh } from 'react-vant'
 import './index.scss'

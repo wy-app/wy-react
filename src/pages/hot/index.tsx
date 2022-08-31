@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import type { ListInstance } from 'react-vant';
+import type { ListInstance } from 'react-vant'
 import { getHostNews } from '@/api'
 import { Cell, List, Empty, Image, PullRefresh } from 'react-vant'
 import './index.scss'
@@ -21,13 +21,13 @@ export default function HotList () {
     console.log(resultJson)
     setDataList((v: any) => [...v, ...list])
     if (dataList.length >= 30) {
-      setFinished(true);
+      setFinished(true)
     }
   }
   const onRefresh = async () => {
-    setFinished(false);
-    await onLoad();
-    listRef.current?.check();
+    setFinished(false)
+    await onLoad()
+    listRef.current?.check()
   }
 
   return (

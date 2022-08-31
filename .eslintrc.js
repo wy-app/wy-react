@@ -53,84 +53,77 @@ module.exports = {
     '@typescript-eslint/member-ordering': 'off',
     'max-params': 0,
     'accessor-pairs': 2,
-    // 'arrow-spacing': [
-    //   2,
-    //   {
-    //     before: true,
-    //     after: true
-    //   }
-    // ],
-    // 'block-spacing': [2, 'always'],
-    // 'brace-style': [
-    //   2,
-    //   '1tbs',
-    //   {
-    //     allowSingleLine: true
-    //   }
-    // ],
+    'arrow-spacing': [
+      2,
+      {
+        before: true,
+        after: true
+      }
+    ],
+    'block-spacing': [2, 'always'],
+    'brace-style': [
+      2,
+      '1tbs',
+      {
+        allowSingleLine: true
+      }
+    ],
     camelcase: [
       0,
       {
         properties: 'always'
       }
     ],
-    // 'comma-dangle': [2, 'never'],
-    // 'comma-spacing': [
-    //   2,
-    //   {
-    //     before: false,
-    //     after: true
-    //   }
-    // ],
-    // 'comma-style': [2, 'last'],
-    // 'constructor-super': 2,
-    // curly: [2, 'multi-line'],
-    // 'dot-location': [2, 'property'],
-    // 'eol-last': 2,
+    'comma-dangle': [2, 'never'],
+    'comma-spacing': [
+      2,
+      {
+        before: false,
+        after: true
+      }
+    ],
+    'comma-style': [2, 'last'],
+    'constructor-super': 2,
+    curly: [2, 'multi-line'],
+    'dot-location': [2, 'property'],
+    'eol-last': 2,
     eqeqeq: [0, 'always', { null: 'ignore' }],
-    // 'generator-star-spacing': [
-    //   2,
-    //   {
-    //     before: true,
-    //     after: true
-    //   }
-    // ],
-    // 'handle-callback-err': [2, '^(err|error)$'],
-    // indent: [
-    //   2,
-    //   2,
-    //   {
-    //     SwitchCase: 1
-    //   }
-    // ],
-    // 'key-spacing': [
-    //   2,
-    //   {
-    //     beforeColon: false,
-    //     afterColon: true
-    //   }
-    // ],
-    // 'keyword-spacing': [
-    //   2,
-    //   {
-    //     before: true,
-    //     after: true
-    //   }
-    // ],
-    // 'new-cap': [
-    //   0,
-    //   {
-    //     newIsCap: true,
-    //     capIsNew: false
-    //   }
-    // ],
-    'semi-spacing': 'off',
-    'semi': 'off',
-    "indent": 0,
-    'object-shorthand': 0,
-    'comma-dangle': 0,
-    'import/no-absolute-path': 0,
-    'quotes': 0
+    'generator-star-spacing': [
+      2,
+      {
+        before: true,
+        after: true
+      }
+    ],
+    'handle-callback-err': [2, '^(err|error)$'],
+    indent: [
+      2,
+      2,
+      {
+        SwitchCase: 1
+      }
+    ],
+    'key-spacing': [
+      2,
+      {
+        beforeColon: false,
+        afterColon: true
+      }
+    ],
+    'keyword-spacing': [
+      2,
+      {
+        before: true,
+        after: true
+      }
+    ],
+    'new-cap': [
+      0,
+      {
+        newIsCap: true,
+        capIsNew: false
+      }
+    ]
   },
   overrides: [
     {

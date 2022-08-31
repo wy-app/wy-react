@@ -21,11 +21,11 @@ const shareOptions = [
   { name: '微博', icon: 'weibo' },
   { name: '复制链接', icon: 'link' },
   { name: '分享海报', icon: 'poster' },
-  { name: '二维码', icon: 'qrcode' },
+  { name: '二维码', icon: 'qrcode' }
 ]
 function Detail (props: any) {
   const localtion = useLocation()
-  const { id, activeTab, from } = localtion.state as any
+  const { id, activeTab, from, status } = localtion.state as any
   if (!id) return <Empty description="暂无数据" />
   const [detailData, setDetailData] = useState({} as DetailDataType)
   const navigate = useNavigate()
@@ -81,11 +81,11 @@ function Detail (props: any) {
   const goBack = () => {
     if (from === 'search') {
       navigate('/search', {
-        state: { activeTab: activeTab }
+        state: { searchStatus: status }
       })
     } else {
       navigate('/', {
-        state: { activeTab: activeTab }
+        state: { activeTab }
       })
     }
   }

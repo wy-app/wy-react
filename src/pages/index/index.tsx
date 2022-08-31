@@ -7,6 +7,8 @@ import Header from '../../components/Header/index'
 import './index.scss'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 
+import { useCacheDispatch } from 'react-keepalive-router'
+
 const Index = () => {
   const localtion = useLocation()
   const [activeIndex, setActiveIndex] = useState(0)
@@ -27,21 +29,6 @@ const Index = () => {
     path: ''
   }, {
     id: 3,
-    title: '热点',
-    value: 'hot',
-    path: ''
-  }, {
-    id: 4,
-    title: '推荐',
-    value: 'recommend',
-    path: ''
-  }, {
-    id: 5,
-    title: '原创',
-    value: 'original',
-    path: ''
-  }, {
-    id: 6,
     title: '热点',
     value: 'hot',
     path: ''
@@ -68,20 +55,25 @@ const Index = () => {
         return <h4>暂无数据</h4>
     }
   }
-  return (
-    <>
-      <Header></Header>
-      <Tabs className='tabs' sticky swipeable active={activeIndex}>
-        {
-          tabList.map((item, i) =>
-            <Tabs.TabPane key={item.id} title={`${item.title}`} >
-              {renderList(item)}
-            </Tabs.TabPane>
-          )
-        }
-      </Tabs>
-    </>
-  )
+  // return (
+  //   <>
+  //     <Header></Header>
+  //     <Tabs className='tabs' sticky swipeable active={activeIndex}>
+  //       {
+  //         tabList.map((item, i) =>
+  //           <Tabs.TabPane key={item.id} title={`${item.title}`} >
+  //             {renderList(item)}
+  //           </Tabs.TabPane>
+  //         )
+  //       }
+  //     </Tabs>
+  //   </>
+  // )
+
+  const cacheDispatch = useCacheDispatch()
+  return <div>我是首页
+    <button onClick={() => cacheDispatch({ type: 'reset' })} >清除缓存</button>
+  </div>
 }
 
 export default Index

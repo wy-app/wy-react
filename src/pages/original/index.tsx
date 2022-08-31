@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react'
-import type { ListInstance } from 'react-vant';
+import type { ListInstance } from 'react-vant'
 import { getOriginalNews } from '@/api'
 import { Cell, List, Empty, Image, PullRefresh } from 'react-vant'
 import './index.scss'
@@ -14,7 +14,7 @@ export default function HotList () {
     qsyk: '轻松一刻',
     fd: '沸点工作室',
     rj: '人间工作室',
-    lc: '浪潮工作室',
+    lc: '浪潮工作室'
   }
 
   const onLoad = async () => {

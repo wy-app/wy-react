@@ -9,6 +9,7 @@ interface listItemProp {
   data: Object
   activeTab?: string
 }
+// 新闻列表排版组件
 function ListItem (props: listItemProp) {
   const navigate = useNavigate()
 

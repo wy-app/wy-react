@@ -8,15 +8,15 @@ const index_original = 'http://3g.163.com/touch/api/pagedata/index_original' // 
 const hotWord = 'http://gw.m.163.com/search/api/v1/pc-wap/hot-word' // 搜索默认推荐列表
 const searchApi = 'http://gw.m.163.com/search/api/v1/pc-wap/sug' // 模糊搜索标题
 const searchDetail = 'http://c.m.163.com/fe/api/search/query' // 精确搜索字段结果
-const detailAPi = `http://c.m.163.com/nc/article/docid/full.html` // 详情
+const detailAPi = 'http://c.m.163.com/nc/article/docid/full.html' // 详情
 // 推荐 http://c.m.163.com/nc/article/headline/T1348647853363/0-20.html
 // 娱乐 http://c.3g.163.com/nc/article/list/T1348648517839/0-20.html
-const recommendAPi = `http://c.m.163.com/nc/article/list/T1348648517839/PageRange.html`
+const recommendAPi = 'http://c.m.163.com/nc/article/list/T1348648517839/PageRange.html'
 const rollingAPi = 'http://gw.m.163.com/search/api/v1/pc-wap/rolling-word'
 // 热门评论
-const comments_hotList = `http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/DOCID/comments/hotList?offset=0&limit=5&headLimit=3&tailLimit=2&ibc=newswap&showLevelThreshold=5`
+const comments_hotList = 'http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/DOCID/comments/hotList?offset=0&limit=5&headLimit=3&tailLimit=2&ibc=newswap&showLevelThreshold=5'
 // 最新评论
-const comments_newList = `http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/DOCID/comments/newList?offset=OFFSET&limit=5&headLimit=3&tailLimit=2&ibc=newswap&showLevelThreshold=5&callback=callback_1655710210922`
+const comments_newList = 'http://comment.api.163.com/api/v1/products/a2869674571f77b5a0867c3d71db5856/threads/DOCID/comments/newList?offset=OFFSET&limit=5&headLimit=3&tailLimit=2&ibc=newswap&showLevelThreshold=5&callback=callback_1655710210922'
 
 export const getHostNews = (callbackObj: any) => {
   return get(`${base}?key=wy&url=${hotUrl}`, callbackObj)

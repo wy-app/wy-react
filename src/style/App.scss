@@ -5,7 +5,8 @@
   max-width: 768px;
 
   .app-content {
-    min-height: calc(100vh - 48px);
+    // min-height: calc(100vh - 48px);
+    min-height: 100vh;
     background-color: #fff;
     font-size: calc(10px + 2vmin);
     color: #333;

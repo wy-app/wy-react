@@ -6,7 +6,6 @@ import './index.scss'
 import { /* BrowserRouter as Router, Switch, useParams,  */ useLocation, useNavigate } from 'react-router-dom'
 import { Search as SearchIcon } from '@react-vant/icons'
 import { newsItem } from '../../types/news'
-import ListItem from '../../components/ListItem'
 
 function SearchPage (props: any) {
   const listRef = useRef<ListInstance>(null)
@@ -21,11 +20,13 @@ function SearchPage (props: any) {
   const [placeholder, setPlaceholder] = useState('请输入搜索关键词')
   const navigate = useNavigate()
   const localtion = useLocation()
-  const { hotWord } = localtion.state as any
+  const { hotWord, searchStatus } = localtion.state as any
+
   useEffect(() => {
     console.log('componentDidMount')
     hotWord && setVauge(hotWord)
     hotWord && setPlaceholder(hotWord)
+    searchStatus && setStatus(searchStatus)
     return () => {
       console.log('componentWillUnmount')
     }
@@ -120,7 +121,7 @@ function SearchPage (props: any) {
 
   const toDetail = (docid: string) => {
     navigate('/detail', {
-      state: { id: docid, from: 'search' }
+      state: { id: docid, from: 'search', status: status }
     })
   }
 
